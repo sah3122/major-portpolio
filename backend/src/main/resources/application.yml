@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: nps-portfolio
+  profiles:
+    default: local
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:h2:mem:nps;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+nps:
+  openapi:
+    base-url: https://api.odcloud.kr/api
+    service-key: ""
+    timeout-seconds: 30
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:nps}
+    username: ${DB_USER:nps}
+    password: ${DB_PASSWORD:nps}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+nps:
+  openapi:
+    base-url: https://api.odcloud.kr/api
+    service-key: ""
+    timeout-seconds: 30
+
+server:
+  port: 8080

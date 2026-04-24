@@ -18,8 +18,8 @@ class NpsDataParserSpec : DescribeSpec({
                 "종목명" to "삼성전자",
                 "시장구분" to "유가증권",
                 "보유수량" to "1,000,000",
-                "평가금액" to "80000000000",
-                "지분율" to "7.56",
+                "평가액(억 원)" to "800",   // 800억 → 80,000,000,000 KRW
+                "지분율(퍼센트)" to "7.56",
                 "자산군" to "국내주식",
             )
 
@@ -47,7 +47,7 @@ class NpsDataParserSpec : DescribeSpec({
         }
 
         it("returns null when required fields missing") {
-            parser.parse(mapOf("종목명" to "foo"), 2025).shouldBeNull()
+            parser.parse(mapOf("시장구분" to "유가증권"), 2025).shouldBeNull()
         }
     }
 })

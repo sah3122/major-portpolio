@@ -36,13 +36,16 @@ class NpsDataParser {
                 else -> AssetClass.DOMESTIC_EQUITY
             }
 
+        val shares = raw.pickBigDecimal("보유수량", "shares")
+            ?.toLong() ?: 0L
+
         return runCatching {
             ParsedRecord(
                 stock = Stock(code, name, resolvedMarket),
                 holding = Holding(
                     stockCode = code,
                     fiscalYear = fiscalYear,
-                    shares = 0L, // API 미제공
+                    shares = shares,
                     marketValue = marketValue,
                     ownershipRatio = ownershipRatio,
                     assetClass = assetClass,
